@@ -1,0 +1,38 @@
+
+Codeigniter REST API project
+------------------------------------------------------------------
+
+installation:
+---------------------------------------------------------------
+(for HMVC Codeigniter installation)
+1. copy Api module to application/modules
+
+
+(for regular MVC Codeigniter
+1. copy every file from each directory_name to CI/application/directory_name
+2. In controller in line
+    require APPPATH. 'modules/api/libraries/REST_Controller.php';
+    change:
+    require APPPATH. 'libraries/REST_Controller.php';
+
+install database table and rename it accordingly
+Also in Api_model rename declared variables by field names
+
+------------------------------------------------------------------
+(for example use table demo)
+In Api_model.php define fields which are include in get method
+Avoid hidden and protected fields, like: password, ip adress,...
+------------------------------------------------------------------
+Create table demo:
+
+copy sql:
+------------------------------------------------------------------
+CREATE TABLE demo
+(
+  demo_id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  email VARCHAR(100) NOT NULL,
+  password VARCHAR(256) NOT NULL,
+  phone VARCHAR(20) NOT NULL,
+  ip_adress VARCHAR(15) NOT NULL
+);
+------------------------------------------------------------------

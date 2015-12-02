@@ -1,0 +1,58 @@
+@media (min-width:992px)
+{
+    .container{width:960px}
+}
+@media (min-width:1200px)
+{
+    .container{width:960px}
+}
+
+/*
+     Insert Glyohicons inside inputboxes
+
+     <div class="inner-addon left-addon">
+        <i class="glyphicon glyphicon-user"></i>
+        <input type="text" class="form-control" />
+     </div>
+*/
+/* enable absolute positioning */
+.inner-addon {
+    position: relative;
+}
+
+/* style icon */
+.inner-addon .glyphicon {
+    position: absolute;
+    padding: 0.5em 0 0.5em 1em;
+    pointer-events: none;
+}
+
+/* align icon */
+.left-addon .glyphicon  { left:  0;}
+.right-addon .glyphicon { right: 0;}
+
+/* add padding  */
+.left-addon input  { padding-left:  7em; }
+.right-addon input { padding-right: 3em; }
+
+/*
+    Ikonice u boxovima
+*/
+.features-box-icon {
+    width: 1.5em;
+    height: 1.5em;
+    margin: 0 auto;
+    padding: 0.2em 0.1em 0 0;
+    background: #e8643e;
+    -moz-border-radius: 0.2em;
+    -webkit-border-radius: 0.2em;
+    border-radius: 0.2em;
+    font-size: 1.4em;
+    color: #fff;
+    line-height: 1em;
+    text-align: center;
+}
+
+.features-box-icon span {
+    vertical-align: middle;
+}
