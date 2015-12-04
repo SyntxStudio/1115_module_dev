@@ -11,16 +11,20 @@ class Navbar_bs3 extends MY_Controller{
 
     public function __construct(){
         parent::__construct();
+        $this->data['brand'] = 'BRAND';
     }
 
     public function index()
     {
-        $this->data['brand'] = 'BRAND';
-
         $this->data['menuitems'] = Modules::run('menuitems/menuitems/index');
 
         $this->load->view('navbar_view', $this->data);
-        // TODO dodaje neku liniju ipod navbara
+    }
+
+    public function navbar_top()
+    {
+        $this->data['menuitems'] = Modules::run('menuitems/menuitems/index');
+        $this->load->view('demo_view', $this->data);
     }
 
 }

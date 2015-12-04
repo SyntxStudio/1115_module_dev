@@ -152,7 +152,7 @@ class Menuitems_model extends CI_Model
      * @param $parent
      * @return string
      */
-    public function get_menu($parent=0)
+    public function get_menu($parent = 0)
     {
         $menu = $this->fetch_menu_array();
         $output = $this->build_menu($parent, $menu);
@@ -168,7 +168,7 @@ class Menuitems_model extends CI_Model
      * @param bool $submenu
      * @return string
      */
-    private function build_menu($parent =0, $menu, $submenu =FALSE)
+    private function build_menu($parent = 0, $menu, $submenu =FALSE)
     {
         // set template version
         $template = $this->_template_config[$this->_config_template_version];
@@ -184,14 +184,12 @@ class Menuitems_model extends CI_Model
             $i = 1;
             foreach ($menu['parents'][$parent] as $itemId)
             {
-
                 // set active segment by menu link and uri
-                $link = $menu['items'][$i]['link'];
+                $link = (isset($menu['items'][$i]['link']))?$menu['items'][$i]['link']:FALSE;
                 $active = $this->uri->uri_string() == $link ? TRUE : FALSE;
                 // case parent without any children
                 if(!isset($menu['parents'][$itemId]))
                 {
-                    // TODO zameniti sa config linijama
                     $html .= ($active && !$submenu) ? $template['li_class_active'] : '<li>';
                     $html .= "<a href='".$menu['items'][$itemId]['link']."'>".$menu['items'][$itemId]['label']."</a></li>";
                 }
@@ -200,10 +198,16 @@ class Menuitems_model extends CI_Model
                 {
                     $html .= $template['li_class_dropdown'];
                     $html .= '<a href="' . $menu['items'][$itemId]['link'] . '"';
+                    // TODO napraviti uslov ako je bootstrap ili ostalo
                     $html .= ' class="dropdown-toggle" data-toggle="dropdown"';
-                    $html .= ' role="button" aria-haspopup="true" aria-expanded="false">';
+                    $html .= ' role="button" aria-haspopup="true" aria-expanded="false"';
+                    // TODO gornja dva reda
+                    $html .= '>';
                     $html .= $menu['items'][$itemId]['label'];
-                    $html .= '<span class="caret"></span></a>';
+                    // TODO takodje napraviti uslov ako je bootstrap
+                    $html .= '<span class="caret"></span>';
+                    // TODO dovde
+                    $html .= '</a>';
                     $html .= $this->build_menu($itemId, $menu, TRUE);
                     $html .= "</li>";
                 }
@@ -212,8 +216,144 @@ class Menuitems_model extends CI_Model
             $html .= "</ul>";
         }
         return $html;
-
     }
+
+    public function get_ajax_menu()
+    {
+        $menu = $this->fetch_menu_array();
+        $output = $this->build_ajax_menu(0, $menu);
+        return $output;
+    }
+
+    /**
+     * Method return menu in htlm string for jQuery nested sortable functions
+     * @param $menu
+     * @param bool $submenu
+     * @internal param $array
+     * @internal param bool $child
+     * @return string
+     */
+    public function build_ajax_menu($parent = 0, $menu, $submenu = FALSE)
+    {
+        $html = '';
+        if (isset($menu['parents'][$parent]))
+        {
+            // if method is pulled first time it's single parent class ul, else it's dropdown
+            $html .= ($submenu) ? '<ol>' : '<ol class="sortable">';
+            foreach ($menu['parents'][$parent] as $itemId)
+            {
+                // case parent without any children
+                if(!isset($menu['parents'][$itemId]))
+                {
+                    $html .= '<li id="list_'. $menu['items'][$itemId]['id'] .'">';
+                    $html .= '<div>' .$menu['items'][$itemId]['label']. '</div>';
+                    $html .= "</li>";
+                }
+                // case parent with childrens
+                if(isset($menu['parents'][$itemId]))
+                {
+                    $html .= '<li id="list_'. $menu['items'][$itemId]['id'] .'">';
+                    $html .= '<div>' .$menu['items'][$itemId]['label']. '</div>';
+                    $html .= $this->build_ajax_menu($itemId, $menu, TRUE);
+                    $html .= "</li>";
+                }
+            }
+            $html .= "</ol>";
+        }
+        return $html;
+    }
+
+
+    /**
+     * Method pulls selected or all fields
+     * and order them in jQuery sortable format
+     * @param null $fields
+     * @return array
+     */
+    public function get_nested ($fields = NULL)
+    {
+        // if provided set only selected fields
+        if ($fields !== NULL){
+            $this->db->select($fields);
+        }
+        $this->db->order_by('order');
+        $items = $this->db->get($this->_table)->result_array();
+        // parents first
+        $array = array();
+        foreach ($items as $item) {
+            if (!$item['parent']) {
+                $array[$item['id']] = $item;
+            }
+        }
+        // zatim childovi
+        foreach ($items as $item) {
+            if ($item['parent']) {
+                $array[$item['parent']]['children'][] = $item;
+            }
+        }
+        //return $array;
+        $result = $this->get_ol($array);
+        echo $result;
+    }
+
+    /**
+     * Probna funkcija da bi provalio raspored
+     * i kreiranje elemenata za nested Sortable
+     */
+    function get_ol($array, $child = FALSE)
+    {
+        $str = '';
+        if (count($array)) {
+            $str .= $child == FALSE ? '<ol class="sortable">' : '<ol>';
+
+            foreach ($array as $item) {
+                $str .= '<li id="list_' . $item['id'] .'">';
+                $str .= '<div>' . $item['label'] .'</div>';
+
+                // Do we have any children?
+                if (isset($item['children']) && count($item['children'])) {
+                    $str .= $this->get_ol($item['children'], TRUE);
+                }
+
+                $str .= '</li>' . PHP_EOL;
+            }
+
+            $str .= '</ol>' . PHP_EOL;
+        }
+
+        return $str;
+    }
+
+    /**
+     * Method saves order selected by AJAX call in menuitem/order_by_ajax
+     */
+    public function save_order($items)
+    {
+        if (count($items)) {
+            foreach ($items as $order => $item) {
+                if ($item['item_id'] != '') {
+                    $data = array('parent' => (int) $item['parent_id'], 'order' => $order);
+                    $this->db->set($data)->where($this->_primary_key, $item['item_id']);
+                    $this->db->update($this->_table);
+                }
+            }
+        }
+    }
+
+    /**
+     * Model for printing $parent options
+     */
+    public function available_parents()
+    {
+        $str = 'Available <$parent> options:<br/>';
+        $menu = $this->fetch_menu_array();
+        foreach ($menu['parents'] as $key=>$value) {
+            $str .= $key . '<br/>';
+        }
+        return $str;
+    }
+
+
 
     /**
      * Method returns reordered array of menu items
@@ -294,6 +434,54 @@ class Menuitems_model extends CI_Model
     /**
      * Save method include insert method with blank id atribut
      * and update on provided id atribut
+     * @param null $id
      */
-    
+    public function save($id = NULL)
+    {
+
+    }
+
+    /** ----------------------------------------------------------------------
+     * Created by: Petar
+     * Date: 1.11.2015
+     * Time: 22:44
+     * Desc: Method deletes specified field by id
+     *  if field is parent of other fields, those fields are then set to master
+     * -----------------------------------------------------------------------
+     * @param $id
+     * @return bool|void
+     */
+
+    public function delete($id = NULL, $delete_children = FALSE)
+    {
+        //filter $id for specific type
+        $filter = $this->_primary_filter;
+        $id = $filter($id);
+
+        // first delete selected field
+        if (!$id){
+            return FALSE;
+        }
+        // then fetch items parent number (default for 0)
+        $item = $this->db->select('parent')->where($this->_primary_key,$id)->get($this->_table)->row_array();
+        // delete selected item
+        if (count($item)){
+            $this->db->where($this->_primary_key, $id);
+            $this->db->limit(1);
+            $this->db->delete($this->_table);
+            // options to kill all ancestors or set them to upper parent
+            if ($delete_children){
+                // TODO get id of all siblings with master parent with this id
+                $this->db->where('parent', $id);
+                // then delete all within array of id's
+            } else {
+                // or reset any siblings to grandparent or 0
+                // set to upper level
+                $this->db->where('parent',$id);
+                $this->db->set(array('parent'=>$item['parent']));
+                $this->db->update($this->_table);
+            }
+            return TRUE;
+        }
+    }
 }

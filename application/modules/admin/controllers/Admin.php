@@ -29,7 +29,7 @@ class Admin extends MY_Controller{
             redirect('admin/login', 'refresh');
         }
         $this->data['module'] = Modules::run('public/home/index');
-        $this->load->view('admin/_layout_main', $this->data);
+        $this->load->view('admin_view', $this->data);
     }
 
     public function modal()

@@ -22,8 +22,6 @@ $lang['account_creation_successful'] 	  	 = 'Nalog je uspješno kreiran';
 $lang['account_creation_unsuccessful'] 	 	 = 'Nalog nije kreiran';
 $lang['account_creation_duplicate_email'] 	 = 'Email je već iskorišćen ili pogrešan';
 $lang['account_creation_duplicate_identity'] = 'Korisničko ime je već iskorišćeno ili pogrešno';
-
-// TODO Please Translate
 $lang['account_creation_missing_default_group'] = 'Podrazumevana grupa nije podešena';
 $lang['account_creation_invalid_default_group'] = 'Pogrešan naziv za podrazumevanu grupu';
 
