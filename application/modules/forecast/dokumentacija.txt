@@ -1,0 +1,29 @@
+Fajl za modul forecast
+
+-------------------------------------------------------------------------------------
+Modul je namenjen za prikaz i memorisanje podataka prognoze vremena za odredjeni rejon.
+
+Zamisao je da se podaci skidaju sa nekog API sajta koji nudi prognozu u .xml formatu.
+Za prvu ruku mislim da se nakacim na Norveski sajt api.met.no koji uzima podatke sa yr.no
+Njihovi podaci su uvek najtacniji
+
+Modul objedinjuje tri tabele:
+1. opsti globalni podaci
+2. koordinate mesta (obzirom da vecina sajtova zahteva lon, lat koordinate a ne nazive mesta)
+3. skladistenje podataka svakodnevo, ako ne i na par sati.
+Zadnja tabela podrazumeva i pravljenje kopija na nekom odredjenom periodu, da bi se rasteretila.
+
+--9.12.2015----------------------------------------------------------------------------
+Modul zapocet
+napravljeni osnovni templejti controlera, modela i demo view-a.
+za pocetak sam potrpao promenljive u index kontrolera.
+zatim to prebacujem u tabelu globalnihg podataka
+zamisao:
+1. id   | naziv sajta   | promenljiva       | opis                  | vrednost
+primer:
+    1   | api.met.no    | sajt_url          | lokacija sajta        | api.emt.no
+    2   | api.met.no    | tip_prognoze      | locationforecast      | locationforecast
+    3   | api.met.no    | locationforecast  | ceo uri za povlacenje | http://api.met.no/weatherapi/locationforecast/1.9/?lat=60.10;lon=9.58
+                                                                  Schema
+
+    i izbactiti query iz stringa.. Njega kasnije ubaciti iz druge tabele

@@ -84,7 +84,7 @@ class Menuitems_model extends CI_Model
         'description' => array(
             'field' => 'description',
             'label' => 'Description',
-            'rules' => 'trim|required|max_length[100]'
+            'rules' => 'trim|max_length[100]'
         ),
         'link' => array(
             'field' => 'link',
@@ -318,14 +318,22 @@ class Menuitems_model extends CI_Model
                 if(!isset($menu['parents'][$itemId]))
                 {
                     $html .= '<li id="list_'. $menu['items'][$itemId][$this->_primary_key] .'">';
-                    $html .= '<div>' .$menu['items'][$itemId][$this->_label_name]. '</div>';
+                    $html .= '<div class="items-group">';
+                    $html .= $menu['items'][$itemId][$this->_label_name];
+                    $html .= '<span class="link-edit"><a href="'.site_url('menuitems/edit/'.$menu['items'][$itemId][$this->_primary_key]).'"><img src="/assets/images/icons/Edit.svg" alt="edit"/></a></span>';
+                    $html .= '<span class="link-delete"><a href="'.site_url('menuitems/delete/'.$menu['items'][$itemId][$this->_primary_key]).'"><img src="/assets/images/icons/Delete.svg" alt="delete"/></a></span>';
+                    $html .= '</div>';
                     $html .= "</li>";
                 }
                 // case parent with childrens
                 if(isset($menu['parents'][$itemId]))
                 {
                     $html .= '<li id="list_'. $menu['items'][$itemId][$this->_primary_key] .'">';
-                    $html .= '<div>' .$menu['items'][$itemId][$this->_label_name]. '</div>';
+                    $html .= '<div class="items-group">';
+                    $html .= $menu['items'][$itemId][$this->_label_name];
+                    $html .= '<span class="link-edit"><a href="'.site_url('menuitems/edit/'.$menu['items'][$itemId][$this->_primary_key]).'"><img src="/assets/images/icons/Edit.svg" alt="edit"/></a></span>';
+                    $html .= '<span class="link-delete"><a href="'.site_url('menuitems/delete/'.$menu['items'][$itemId][$this->_primary_key]).'"><img src="/assets/images/icons/Delete.svg" alt="delete"/></a></span>';
+                    $html .= '</div>';
                     $html .= $this->build_ajax_menu($itemId, $menu, TRUE);
                     $html .= "</li>";
                 }

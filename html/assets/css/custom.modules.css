@@ -1,0 +1,57 @@
+body{
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#660300+0,b71b00+100 */
+    background: #660300; /* Old browsers */
+    background: -moz-linear-gradient(left,  #660300 0%, #b71b00 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left,  #660300 0%,#b71b00 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right,  #660300 0%,#b71b00 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#660300', endColorstr='#b71b00',GradientType=1 ); /* IE6-9 */
+}
+
+.module{
+    padding: .5rem;
+    color: #f5f5f5;
+    font: 1rem tahoma, sans-serif;
+}
+
+fieldset{
+    background: rgba(0,0,0,0.4);
+    border: none;
+}
+
+.btnbar-group{
+    background: rgba(0,0,0,.2);
+    padding: .3rem;
+    margin-top: 2rem;
+    padding: .6rem;
+}
+
+.btnbar-btn{
+    background: none;
+    border: none;
+    padding-right: 2rem;
+    color: #f7f7f7;
+    font: 1.1rem tahoma, sans-serif;
+    text-decoration: none !important;
+}
+
+.btnbar-btn:focus{
+    color: #cd6e00;
+}
+
+.btnbar-btn b{
+    color: #e5d6cd;
+    text-decoration:underline;
+}
+
+section{
+    background: rgba(0,0,0,.7);
+}
+
+section p{
+    padding: 0.9rem;
+}
+
+section span{
+    color: #843534;
+    font-weight: bold;
+}

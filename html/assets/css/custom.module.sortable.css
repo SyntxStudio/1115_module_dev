@@ -1,0 +1,57 @@
+.placeholder {
+    border: 1px dashed #4183C4; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
+}
+
+.mjs-nestedSortable-error {
+    background: #fbe3e4; border-color: transparent;
+}
+
+ol {
+    margin: 0; padding: 0; padding-left: 30px;
+}
+
+ol.sortable,ol.sortable ol {
+    margin: 0 0 0 25px; padding: 0; list-style-type: none;
+}
+
+ol.sortable {
+    margin: 4em 0;
+}
+
+.sortable li {
+    margin: 5px 0 0 0;
+    padding: 0;
+
+}
+
+.sortable li div {
+    border: none; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; border-color: #D4D4D4 #D4D4D4 #BCBCBC; padding: 6px; margin: 0; cursor: move; background: #f6f6f6; background: -moz-linear-gradient(top, #ffffff 0%, #f6f6f6 47%, #ededed 100%);
+    background: rgba(0,0,0,.5);
+    padding: .5rem;
+}
+
+.sortable img{
+    width: 1rem;
+    height: 1rem;
+    margin-right: 1rem;
+}
+.sortable img:focus{
+    background-color: #b71b00;
+}
+
+.items-group{
+    display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    alignt-items: center;
+    -webkit-align-items: center;
+}
+
+.link-edit{
+    margin-left: auto;
+}
+
+
+
+

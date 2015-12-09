@@ -57,6 +57,7 @@ class Menuitems extends MY_Controller{
         if(!$id == NULL) {
             $this->Menuitems_model->delete($id);
         }
+        redirect('menuitems/order');
     }
 
     /**
@@ -84,6 +85,10 @@ class Menuitems extends MY_Controller{
         $this->load->view('order_ajax', $this->data);
     }
 
+    /**
+     * Controller for editing and adding new item in table
+     * @param null $id
+     */
     public function edit($id = NULL)
     {
         $this->load->library('form_validation');
@@ -114,18 +119,16 @@ class Menuitems extends MY_Controller{
                 'order'
             ));
             $this->Menuitems_model->save($data,$id);
+            redirect('menuitems/order');
         }
-        // for displaying parent option in dropdown select form object
-        $this->data['parent_option'] = array();
-        foreach ($this->data['menuitems'] as $item) {
-            $this->data['parent_option'][] = $item->label;
-        }
-//        var_dump($this->data['menuitems']);
-//        var_dump($this->data['parent_option']);
-//        var_dump($this->data['menuitem']);
 
-        //TODO napraviti edit i show all menuitems view
+        // for displaying parent option in dropdown select form object
+        $this->data['parent_option'] = array(0 => 'root');
+        foreach ($this->data['menuitems'] as $option) {
+            $this->data['parent_option'][$option->id] = $option->label;
+        }
+
         // ucitavanje stranice
-        $this->load->view('menuitems_edit.php', $this->data);
+        $this->load->view('menuitems_edit', $this->data);
     }
 }

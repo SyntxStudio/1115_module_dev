@@ -1,0 +1,64 @@
+.form-group{
+    margin: .5rem;
+}
+
+.legend{
+    color: #d5d4d1;
+    font: 1.1rem tahoma, sans-serif;
+}
+
+.form-group label{
+    background: transparent;
+    color: #977370;
+    padding: .5rem;
+    display:block;
+}
+
+.form-control {
+    background: rgba(0,0,0,0.4);
+    border: transparent;
+    padding: .5rem;
+    width: 95%;
+    color: #ffffff;
+    font: 1rem tahoma,sans-serif;
+}
+
+.form-control:focus{
+    background: rgba(12,12,12, 0.6);
+    outline: 0;
+    color: #ffffff;
+    font-size: 1.1rem;
+    -webkit-transition: ease-in-out, font-size .1s ease-in-out;
+    transition: ease-in-out,font-size .1s ease-in-out;
+}
+
+.form-control::selection {
+    background: #e1cc96; /* WebKit/Blink Browsers */
+}
+
+.form-control::-moz-selection {
+    background: #e1cc96; /* Gecko Browsers */
+}
+
+.form-control::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: #676668;
+}
+.form-control:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #676668;
+    opacity:  1;
+}
+.form-control::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #676668;
+    opacity:  1;
+}
+.form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color:    #676668;
+}
+
+.form-required-sym{
+    color: #dfdfdf;
+}
+
+.form-valid-error{
+    color: red;
+}
