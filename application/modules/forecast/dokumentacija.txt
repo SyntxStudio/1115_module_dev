@@ -19,7 +19,7 @@ napravljeni osnovni templejti controlera, modela i demo view-a.
 za pocetak sam potrpao promenljive u index kontrolera.
 zatim to prebacujem u tabelu globalnihg podataka
 zamisao:
-1. id   | naziv sajta   | promenljiva       | opis                  | vrednost
+1. id   | naziv sajta   | podgrupa          | kljuc                 | vrednost
 primer:
     1   | api.met.no    | sajt_url          | lokacija sajta        | api.emt.no
     2   | api.met.no    | tip_prognoze      | locationforecast      | locationforecast
